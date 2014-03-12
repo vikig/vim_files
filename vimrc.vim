@@ -118,6 +118,7 @@ syntax enable
 if has("gui_running")
     colorscheme solarized
     set background=dark
+    set guifont=Consolas:h10:cANSI
 endif
 
 
@@ -436,4 +437,4 @@ filetype off                   " required!
  """""""""""""""""""""""""""""
  "netskope connector shortcuts
  """""""""""""""""""""""""""""
- so ~/.vim/connector_template_vim.vim
+ so C:\Users\vikas_000\vim\connector_template_vim.vim

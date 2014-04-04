@@ -11,3 +11,8 @@
 :command Csm :normal i <match mtype="decode-key" field="resp-body"><CR><key name=" " order="1" /><CR></match><CR><ESC>
 
 :command Csa :normal i <assign order="" type="decode-key-value" lhs="" startswith="" endswith="" field="post-data" /><CR><ESC>
+
+:command Cdl :normal i <dict><action name="lookup" key="object_id" val="object"/><CR><ESC>
+
+:command Cdu :normal i <dict><action name="update" key="object_id" val="object"/><CR><ESC>
+

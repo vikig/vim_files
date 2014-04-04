@@ -6,3 +6,7 @@
 
 :command Cad :normal i <actions><CR><and><CR><match mtype="nsdef" field="method" key="httpmethods" rhs="" /><CR><match mtype="decode-key" field=""><CR><key name="" order="1"/><CR></match><CR></and><CR><assign type="value" lhs="object_type" rhs=" " /><CR> <trigger name=" " nativeapp-platforms=" "><CR><var name="object_type"/><CR></trigger><CR></actions><CR><ESC>
 
+:command Cdl :normal i <dict><action name="lookup" key="object_id" val="object"/><CR><ESC>
+
+:command Cdu :normal i <dict><action name="update" key="object_id" val="object"/><CR><ESC>
+

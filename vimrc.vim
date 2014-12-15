@@ -38,7 +38,7 @@ set history=700
 filetype plugin on
 filetype indent on
 
-call pathogen#infect()
+"call pathogen#infect()
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -397,13 +397,28 @@ function! <SID>BufcloseCloseIt()
    endif
 endfunction
 
+"http://vim.wikia.com/wiki/Diff_current_buffer_and_the_original_file
+"function and command to see a diff  between the currently edited file and its unmodified version in the filesystem. 
+" use :DiffSaved
+" to turn diff view off : diffoff
+
+function! s:DiffWithSaved()
+    let filetype=&ft
+    diffthis
+    vnew | r # | normal! 1Gdd
+    diffthis
+    exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+endfunction
+com! DiffSaved call s:DiffWithSaved()
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""
 "VUNDLE 
 set nocompatible               " be iMproved
 filetype off                   " required!
 
- set rtp+=~/.vim/bundle/vundle/
- call vundle#rc()
+ set rtp+=~/vimfiles/bundle/vundle/
+ let path='~/vimfiles/bundle'
+ call vundle#begin(path)
 
 " let Vundle manage Vundle
  " required! 
@@ -420,12 +435,39 @@ filetype off                   " required!
  Bundle 'L9'
  Bundle 'FuzzyFinder'
  " non github repos
- Bundle 'git://git.wincent.com/command-t.git'
- " ...
-
+ "Bundle 'git://git.wincent.com/command-t.git' " requires ruby
+ "C IDE
+ Bundle 'mbbill/undotree'
+ Bundle 'majutsushi/tagbar'
+ Bundle 'klen/python-mode.git'
+ "Bundle 'Valloric/YouCompleteMe'
+ " Awesome statusline
+ Bundle 'Lokaltog/vim-powerline'
+ "gitk support
+ Bundle 'gregsexton/gitv'
+ "nerdcommenter
+ Bundle 'scrooloose/nerdcommenter'
+ Bundle 'scrooloose/syntastic'
+ "Bundle 'vim-scripts/Gundo'
+ call vundle#end()
  filetype plugin indent on   
 
+ """"""""""""""""""""""""""""""""""'
+ "undlotree
+ """"""""""""""""""""""""""""""""""""
+ if has("persistent_undo")
+    set undodir='~/.undodir/'
+    set undofile
+ endif
+ nnoremap <F5> :UndotreeToggle<cr>
 
+
+ """""""""""""""""""""""""""""""""
+ "Syntastic setup
+ """"""""""""""""""""""""""""""""
+  "Use flake8
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_flake8_args = '--ignore="E501,E302,E261,E701,E241,E126,E127,E128,W801"'
  """""""""""""""""""""""""""""""""""
  "DOXYGEN
  """""""""""""""""""""""""""""""""""
@@ -437,4 +479,4 @@ filetype off                   " required!
  """""""""""""""""""""""""""""
  "netskope connector shortcuts
  """""""""""""""""""""""""""""
- so C:\Users\vikas_000\vim\connector_template_vim.vim
+ so C:\Users\vikas_000\vimfiles\connector_template_vim.vim

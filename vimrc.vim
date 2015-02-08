@@ -128,6 +128,7 @@ if has("gui_running")
     set guioptions+=e
     set t_Co=256
     set guitablabel=%M\ %t
+    set guifont=Monospace\ 9
 endif
 
 " Set utf8 as standard encoding and en_US as the standard language
@@ -237,7 +238,19 @@ autocmd BufReadPost *
 " Remember info about open buffers on close
 set viminfo^=%
 
+" Switch to alternate file, all-tab approach
+map <C-Tab> :bnext<cr>
+map <C-S-Tab> :bprevious<cr>
 
+" Buffer settings for buffer airline plugin 
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
+
+" Show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
+
+" enable/disable displaying tab number in tabs mode. >
+let g:airline#extensions#tabline#show_tab_nr = 1
 """"""""""""""""""""""""""""""
 " => Status line
 """"""""""""""""""""""""""""""
@@ -420,6 +433,8 @@ filetype off                   " required!
  Bundle 'FuzzyFinder'
  " non github repos
  Bundle 'git://git.wincent.com/command-t.git'
+ Bundle 'bling/vim-airline' 
+ "Bundle 'ryanss/vim-hackernews'
  " ...
 
  filetype plugin indent on   

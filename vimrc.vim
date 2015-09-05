@@ -24,6 +24,7 @@
 "    -> Spell checking
 "    -> Misc
 "    -> Helper functions
+"    -> Vundle plugins
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -128,7 +129,7 @@ if has("gui_running")
     set guioptions+=e
     set t_Co=256
     set guitablabel=%M\ %t
-    set guifont=Monospace\ 9
+    set guifont=Hack\ 9
 endif
 
 " Set utf8 as standard encoding and en_US as the standard language
@@ -348,7 +349,6 @@ map <leader>q :e ~/buffer<cr>
 map <leader>pp :setlocal paste!<cr>
 
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -409,8 +409,23 @@ function! <SID>BufcloseCloseIt()
    endif
 endfunction
 
+"http://vim.wikia.com/wiki/Diff_current_buffer_and_the_original_file
+"function and command to see a diff  between the currently edited file and its unmodified version in the filesystem. 
+" use :DiffSaved
+" to turn diff view off : diffoff
+
+function! s:DiffWithSaved()
+    let filetype=&ft
+    diffthis
+    vnew | r # | normal! 1Gdd
+    diffthis
+    exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+endfunction
+com! DiffSaved call s:DiffWithSaved()
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""
 "VUNDLE 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible               " be iMproved
 filetype off                   " required!
 
@@ -432,13 +447,67 @@ filetype off                   " required!
  Bundle 'L9'
  Bundle 'FuzzyFinder'
  " non github repos
+ Bundle 'mbbill/undotree'
+ Bundle 'majutsushi/tagbar'
+ Bundle 'klen/python-mode.git'
+ Bundle 'Lokaltog/vim-powerline'
+ "gitk support
+ Bundle 'gregsexton/gitv'
+ "nerd commentor
+ Bundle 'scrooloose/nerdcommenter'
+ Bundle 'scrooloose/syntastic'
  Bundle 'git://git.wincent.com/command-t.git'
  Bundle 'bling/vim-airline' 
+ Bundle 'tmhedberg/SimpylFold' 
+ " for folding
  "Bundle 'ryanss/vim-hackernews'
  " ...
+ "call vundle#end()
 
  filetype plugin indent on   
 
+ """""""""""""""""'
+ " PYMODE 
+ """""""""""""""
+
+ " Line length
+ let g:pymode_options_max_line_length = 120
+
+ " to solve rope cachine issue
+ let g:pymode_rope = 0
+ let g:pymode_rope_lookup_project = 0
+
+ " Documentation
+ let g:pymode_doc = 1
+ let g:pymode_doc_key = 'K'
+
+ "Linting
+ let g:pymode_lint = 1
+ let g:pymode_lint_checker = "pyflakes,pep8"
+
+ " Auto check on save
+ let g:pymode_lint_write = 1
+ 
+ " Support virtualenv
+ let g:pymode_virtualenv = 1
+
+ " Enable breakpoints plugin
+ let g:pymode_breakpoint = 1
+ let g:pymode_breakpoint_bind = '<leader>b'
+
+ " syntax highlighting
+ let g:pymode_syntax = 1
+ let g:pymode_syntax_all = 1
+ let g:pymode_syntax_indent_errors = g:pymode_syntax_all
+ let g:pymode_syntax_space_errors = g:pymode_syntax_all
+
+
+ """""""""""""""""""""""""""""""""
+ "Syntastic setup
+ """"""""""""""""""""""""""""""""
+  "Use flake8
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_flake8_args = '--ignore="E501,E302,E261,E701,E241,E126,E127,E128,W801"'
 
  """""""""""""""""""""""""""""""""""
  "DOXYGEN
@@ -447,7 +516,13 @@ filetype off                   " required!
  "in case to get rid of highlighted text
  let @/=""
 
-
+ """"""""""""""""""""""""""""""""""""""
+ " AUTHOR NAME, using: http://www.vim.org/scripts/script.php?script_id=2902
+ " """"""""""""""""""""""""""""""""""""
+let g:vimrc_author='Vikas Gupta' 
+let g:vimrc_email='vikas@wegilant.com' 
+let g:vimrc_homepage=' '
+nmap <F4> :AuthorInfoDetect<cr>
  """""""""""""""""""""""""""""
  "netskope connector shortcuts
  """""""""""""""""""""""""""""
